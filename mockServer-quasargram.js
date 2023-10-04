@@ -1,8 +1,9 @@
 const { faker } = require('@faker-js/faker');
+const {DateTime} = require("luxon");
+
 module.exports = function generate() {
 
     const _ = require('lodash');
-    const {DateTime} = require('luxon');
     return {
         users:  [
 
@@ -15,14 +16,14 @@ module.exports = function generate() {
             }
         ],
         posts: _.times(50, function () {
+            let future1Week = createFutureDateByWeeks(1);
+            let future3Weeks = createFutureDateByWeeks(3);
             return {
                 _id: faker.string.uuid(),
                 postedBy:'ef0a908e-c3b9-4c31-b375-0d671cf00e5e',
-                postedDate: createPastDate(),
-                eventDate: faker.date.between({
-                    from: DateTime.now().plus({weeks: 1}).milliseconds,
-                    to: DateTime.now().plus({weeks: 3}).milliseconds
-                }),
+                postedDate: createPastDateByYears(1),
+
+                eventDate: faker.date.between( {future1Week,future3Weeks}),
                 photo: {url:faker.image.url()},
                 comments: [{
                     _id: faker.string.uuid(),
@@ -51,9 +52,14 @@ function createUsername(){
 
 }
 
-function createPastDate(){
+function createPastDateByYears(years){
 
     return faker.date.between(
-        faker.date.past({ years: 1 })
+        faker.date.past({ years: years })
     )
 }
+
+function createFutureDateByWeeks(weeks){
+    return DateTime.now().plus({weeks: weeks}).toJSDate();
+}
+
