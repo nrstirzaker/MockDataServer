@@ -4,11 +4,15 @@ const {DateTime} = require("luxon");
 function generate() {
 
     const _ = require('lodash');
+    const uuid = require('uuid');
     return {
+        uuid:{
+            uuid:uuid.v4()
+        },
         users:  [
 
             {
-                _id: 'ef0a908e-c3b9-4c31-b375-0d671cf00e5e',
+                id: 'ef0a908e-c3b9-4c31-b375-0d671cf00e5e',
                 firstName : 'Pete',
                 lastName: 'Hewlett',
                 userName: '@PeteHewlett',
@@ -19,14 +23,14 @@ function generate() {
             let future1Week = createFutureDateByWeeks(1);
             let future3Weeks = createFutureDateByWeeks(3);
             return {
-                _id: faker.string.uuid(),
+                id: faker.string.uuid(),
                 postedBy:'ef0a908e-c3b9-4c31-b375-0d671cf00e5e',
                 postedDate: createPastDateByYears(1),
 
                 eventDate: faker.date.between( {future1Week,future3Weeks}),
                 photo: {url:faker.image.url()},
                 comments: [{
-                    _id: faker.string.uuid(),
+                    id: faker.string.uuid(),
                     comment: faker.word.words({count: {min: 5, max: 10}}),
                     username: createUsername(),
                     taggedUsers: [
@@ -53,10 +57,8 @@ function createUsername(){
 }
 
 function createPastDateByYears(years){
-
-    return faker.date.between(
-        faker.date.past({ years: years })
-    )
+    const dateFromPreviousYear = faker.date.past({ years: years });
+    return faker.date.between({dateFromPreviousYear});
 }
 
 function createFutureDateByWeeks(weeks){
