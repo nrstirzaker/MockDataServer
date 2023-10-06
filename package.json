@@ -10,7 +10,8 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "json-server": "^0.17.4"
+    "json-server": "^0.17.4",
+    "request": "^2.88.2"
   },
   "dependencies": {
     "@faker-js/faker": "^8.1.0",

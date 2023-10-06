@@ -1,7 +1,7 @@
 const { faker } = require('@faker-js/faker');
 const {DateTime} = require("luxon");
 
-module.exports = function generate() {
+function generate() {
 
     const _ = require('lodash');
     return {
@@ -62,4 +62,6 @@ function createPastDateByYears(years){
 function createFutureDateByWeeks(weeks){
     return DateTime.now().plus({weeks: weeks}).toJSDate();
 }
+
+exports.generate = generate;
 
